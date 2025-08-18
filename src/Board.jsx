@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import Keyboard from './Keyboard';
 
 const Board = () => {
   const words = ["APPLE", "GRAPE", "PEACH", "BERRY", "MELON"];
@@ -9,58 +10,49 @@ const Board = () => {
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleInput = (e) => {
-    if (gameOver) return;
 
-    const key = e.key.toUpperCase();
-
-    if (/^[A-Z]$/.test(key) && currentBlock < 5) {
-      const newGuesses = guesses.map(row => [...row]);
-      newGuesses[currentRow][currentBlock] = key;
-      setGuesses(newGuesses);
-      setCurrentBlock(currentBlock + 1);
-    }
+  const handleLetter = (letter) => {
+    if (gameOver || currentBlock >= 5) return;
+    const newGuesses = guesses.map(row => [...row]);
+    newGuesses[currentRow][currentBlock] = letter;
+    setGuesses(newGuesses);
+    setCurrentBlock(currentBlock + 1);
+  };
 
 
-    if (key === "BACKSPACE" && currentBlock > 0) {
-      const newGuesses = guesses.map(row => [...row]);
-      newGuesses[currentRow][currentBlock - 1] = "";
-      setGuesses(newGuesses);
-      setCurrentBlock(currentBlock - 1);
-    }
+  const handleDelete = () => {
+    if (gameOver || currentBlock === 0) return;
+    const newGuesses = guesses.map(row => [...row]);
+    newGuesses[currentRow][currentBlock - 1] = "";
+    setGuesses(newGuesses);
+    setCurrentBlock(currentBlock - 1);
+  };
 
-    if (key === "ENTER" && currentBlock === 5) {
-      const guessWord = guesses[currentRow].join("");
-      console.log("Submitted guess:", guessWord);
 
-      if (guessWord === answer) {
-        setMessage("Congratulations! You won");
-        setGameOver(true);
-      } else if (currentRow === 5) {
-        setMessage(`Game Over! The word was ${answer}`);
-        setGameOver(true);
-      } else {
+  const handleEnter = () => {
+    if (gameOver || currentBlock < 5) return;
+    const guessWord = guesses[currentRow].join("");
+    console.log("Submitted guess:", guessWord);
 
-        setCurrentRow(currentRow + 1);
-        setCurrentBlock(0);
-      }
+    if (guessWord === answer) {
+      setMessage("Congratulations! You won!");
+      setGameOver(true);
+    } else if (currentRow === 5) {
+      setMessage(` Game Over! The word was ${answer}`);
+      setGameOver(true);
+    } else {
+      setCurrentRow(currentRow + 1);
+      setCurrentBlock(0);
     }
   };
 
 
   const setBlockColor = (letter, index, rowIndex) => {
-  const guessedWord = guesses[rowIndex].join("");
-
-  if (rowIndex > currentRow) return "";
-  if (rowIndex === currentRow) return "";
-
-  if (guessedWord === answer) return "correct";
-  if (answer[index] === letter) return "correct";
-  if (answer.includes(letter)) return "present";
- 
-  return "absent";
-};
-
+    if (rowIndex >= currentRow) return "";
+    if (answer[index] === letter) return "correct";
+    if (answer.includes(letter)) return "present";
+    return "absent";
+  };
 
 
   const resetGame = () => {
@@ -73,28 +65,57 @@ const Board = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleInput);
-    return () => window.removeEventListener("keydown", handleInput);
-  });
+    const handleKeyDown = (e) => {
+      if (gameOver) return;
+
+      if (e.key === "Enter") {
+        handleEnter();
+      } else if (e.key === "Backspace") {
+        handleDelete();
+      } else if (/^[a-zA-Z]$/.test(e.key)) {
+        handleLetter(e.key.toUpperCase());
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gameOver, handleEnter, handleDelete, handleLetter]);
+
 
   return (
     <div>
       <h1>Wordle</h1>
       <hr />
-      <p>{message}</p>
+    
+      {gameOver && (
+        <div className="after">
+          <p>{message}</p>
+          <button className="reset" onClick={resetGame}>Reset</button>
+        </div>
+      )}
+  
+    
       <div className="board">
         {guesses.map((row, rowIndex) => (
           <div className="row" key={rowIndex}>
             {row.map((block, blockIndex) => (
-              <div className={`block ${setBlockColor(block, blockIndex, rowIndex)}`} key={blockIndex}>
+              <div
+                className={`block ${setBlockColor(block, blockIndex, rowIndex)}`}
+                key={blockIndex}
+              >
                 {block}
               </div>
-
             ))}
           </div>
         ))}
       </div>
-      {gameOver && <button onClick={resetGame}>Reset</button>}
+      {!gameOver && (
+        <Keyboard
+          onLetter={handleLetter}
+          onDelete={handleDelete}
+          onEnter={handleEnter}
+        />
+      )}
     </div>
   );
 };

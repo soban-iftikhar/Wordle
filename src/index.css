@@ -60,21 +60,6 @@ p{
 
 }
 
-button{
-  background-color: #6aaa64;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  box-shadow: 0 0 15px #6aaa64, 0 0 20px #6aaa64; 
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #5c9b5a;
-}
-
 .correct {
   background-color: #6aaa64; 
   color: white;
@@ -88,3 +73,89 @@ button:hover {
 .absent {
   background-color: #787c7e; 
 }
+
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 8px;
+}
+
+.keyboard-key {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.keyboard-key:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.keyboard-key.correct {
+  background-color: #6aaa64;
+  color: white;
+}
+
+.keyboard-key.present {
+  background-color: #c9b458;
+  color: white;
+}
+
+.keyboard-key.absent {
+  background-color: #787c7e;
+  color: white;
+}
+
+.after {
+  display: flex;
+  flex-direction: column; /* stack message and button vertically */
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.after p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+.reset {
+  background-color: #5c9b5a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px #6aaa64, 0 0 20px #6aaa64;
+  transition: all 0.2s ease;
+}
+
+.reset:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px #6aaa64, 0 0 25px #6aaa64;
+}
+
