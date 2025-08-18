@@ -13,7 +13,6 @@ h1 {
   margin-bottom: 0;
   font-size: 2.5rem;
   font-weight: bold;
- 
 }
 
 hr {
@@ -26,7 +25,7 @@ hr {
   margin: 0px auto 15px; 
 }
 
-.container {
+.board {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -35,10 +34,12 @@ hr {
   max-height: 60vh;
 }
 
+
 .row {
   display: flex;
   gap: 5px;
 }
+
 
 .block {
   width: 50px;
@@ -52,5 +53,38 @@ hr {
   font-size: 28px;
   font-weight: bold;
   text-transform: uppercase;
-  
+}
+
+p{
+  text-align: center;
+
+}
+
+button{
+  background-color: #6aaa64;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  box-shadow: 0 0 15px #6aaa64, 0 0 20px #6aaa64; 
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5c9b5a;
+}
+
+.correct {
+  background-color: #6aaa64; 
+  color: white;
+}
+
+.present {
+  background-color: #c9b458;
+  color: white;
+}
+
+.absent {
+  background-color: #787c7e; 
 }
