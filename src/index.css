@@ -161,3 +161,70 @@ p{
   box-shadow: 0 0 20px #6aaa64, 0 0 25px #6aaa64;
 }
 
+
+@media (max-width: 480px) {
+  body {
+    padding: 5px;
+    margin-right: 5px;
+  }
+
+  h1 {
+    font-size: 2.8rem;
+    padding-top: 30px;
+    padding-bottom: 10px;
+  }
+
+  hr{
+    margin-bottom: 70px;
+    height: 5px;
+    width: 150px;
+  }
+
+  .keyboard-key {
+    
+    padding: 10px 8px;
+    min-width: 33px;
+    font-size: 12px;
+  }
+
+  .keyboard-row {
+    gap: 4px;
+  }
+
+  .board {
+    padding: 10px;
+    min-height: 50vh;
+    gap: 5px;
+  }
+
+  .row {
+    gap: 5px;
+  }
+
+  .block {
+    width: clamp(50px, 14vw, 60px);
+    height: clamp(50px, 14vw, 60px);
+  }
+}
+
+
+@media (min-width: 1024px) {
+  body {
+    padding: 20px;
+  }
+
+  .board {
+    max-width: 380px;
+    margin: 10px auto 20px;
+  }
+
+  .keyboard {
+    max-width: 550px;
+    margin: 30px auto 0;
+  }
+
+  .block {
+    border-radius: 5px;
+  }
+}
+
